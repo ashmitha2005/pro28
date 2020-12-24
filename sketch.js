@@ -8,24 +8,27 @@ const Constraint = Matter.Constraint;
 var treeobj, stoneobj, boyobj, groundobj;
 var boyimg;
 var mango1, mango2, mango3, mango4, mango5, mango6;
-var chain;
+var chain, treeimg;
 
 function preload()
 {
-	boyimg= loadImage("Plucking mangoes/boy.png");
+  boyimg= loadImage("boy.png");
+  treeimg = loadImage("tree.png")
 }
 
 function setup() {
-	createCanvas(1200, 600);
+	createCanvas(1400, 600);
 
 
 	engine = Engine.create();
 	world = engine.world;
 
 	//Create the Bodies Here.
-	treeobj = new Tree(950, 295, 500, 600);
-	groundobj = new Ground(600,590,1200,20);
-
+	
+	groundobj = new Ground(900,590,1800,20);
+  treeobj = createSprite (1000, 290, 200, 500);
+  treeobj.addImage(treeimg);
+  treeobj.scale=0.49;
 	boyobj = createSprite(200,490);
 	boyobj.addImage(boyimg);
 	boyobj.scale=0.15;
@@ -37,8 +40,9 @@ function setup() {
 	mango3 = new Mango(1030,100,20);
 	mango4 = new Mango(850,150,20);
 	mango5 = new Mango(900,300,20);
-	mango6 = new Mango(1150,280,20);
-
+  mango6 = new Mango(1150,280,20);
+  
+  
 	chain = new Chain(stoneobj.body, {x: 120, y:400});
 	
 	
@@ -98,7 +102,7 @@ function detectCollision(LStone, LMango){
 function keyPressed(){
 	if(keyCode === 32){
 		Matter.Body.setPosition(stoneobj.body, {x: 100,  y: 420})
-		launcherObject.attach(stoneobj.body);
+		chain.attach(stoneobj.body);
 
 	}
 }
